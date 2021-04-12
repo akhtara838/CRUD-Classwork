@@ -1,10 +1,10 @@
-<h2 class="center">User Data for <%= user.name %></h2>
+<h2 class="center">User Data for <%= user.fullName %></h2>
 <table class="table">
     <tbody>
         <tr>
             <td>Name</td>
             <td>
-                <%= user.name %>
+                <%= user.fullName %>
             </td>
         </tr>
         <tr>
@@ -22,7 +22,7 @@
             </td>
         </tr>
         <tr>
-            <td>Num of courses</td>
+            <td>Number of courses</td>
             <td><%= users.courses.length %></td>
         </tr>
     </tbody>

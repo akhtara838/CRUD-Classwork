@@ -1,9 +1,11 @@
 <h2 class="center">User table</h2>
+<button><a href="users/new">Create New User</a></button>
 <table class = "table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>ZipCode</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -13,8 +15,8 @@
 
             <tr>
                 <td>
-                    <a href ="<%= `/users/$user._id` $>">
-                        <%= user.name %>
+                    <a href ="<%= `/users/${user._id}` %>">
+                        <%= user.fullName %>
                     </a>
                 </td>
                 <td>
@@ -24,12 +26,12 @@
                     <%= user.zipCode %>
                 </td>
                 <td>
-                    <a href =" `<%= users/${user._id}/edit` %>">
+                    <a href ="<%= `users/${user._id}/edit` %>">
                         Edit
                     </a>
                 </td>
                 <td>
-                    <a href =" `<%= users/${user._id}/delete?_method-DELETE` %>" onclick="return confirm('Are you sure?')">
+                    <a href="<%= `users/${user._id}/delete?_method=DELETE` %>" onclick="return confirm(`Are you sure?`)">
                         Delete
                     </a>
                 </td>

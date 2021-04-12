@@ -14,12 +14,12 @@ courseSchema = new Schema(
         maxStudents: {
             type: Number,
             default:0,
-            min=[0, "Course cannot have a negative number of students"]
+            min:[0, "Course cannot have a negative number of students"]
         },
         cost: {
             type: Number,
             default:0,
-            min =[0, "Cost cannot be negative"]
+            min :[0, "Cost cannot be negative"]
         }
     },
     {

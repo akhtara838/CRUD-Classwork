@@ -1,9 +1,11 @@
 <h2 class="center">Subscriber table</h2>
+<button><a href="subscribers/new">Create New User</a></button>
 <table class = "table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>ZipCode</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -13,7 +15,7 @@
 
             <tr>
                 <td>
-                    <a href ="<%= `/subscribers/$subscriber._id` $>">
+                    <a href ="<%= `/subscribers/${subscriber._id}` %>">
                         <%= subscriber.name %>
                     </a>
                 </td>
@@ -24,12 +26,12 @@
                     <%= subscriber.zipCode %>
                 </td>
                 <td>
-                    <a href =" `<%= subscribers/${subscriber._id}/edit` %>">
+                    <a href ="<%= `subscribers/${subscriber._id}/edit` %>">
                         Edit
                     </a>
                 </td>
                 <td>
-                    <a href =" `<%= subscribers/${subscriber._id}/delete?_method-DELETE` %>" onclick="return confirm('Are you sure?')">
+                    <a href="<%= `subscribers/${subscriber._id}/delete?_method=DELETE` %>" onclick="return confirm(`Are you sure?`)">
                         Delete
                     </a>
                 </td>

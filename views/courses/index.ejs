@@ -1,5 +1,6 @@
 <h2 class="center">Courses table</h2>
 <table class = "table">
+    <button><a href="/courses/new">Create New Course</a></button>
     <thead>
         <tr>
             <th>Name</th>
@@ -13,7 +14,7 @@
 
             <tr>
                 <td>
-                    <a href ="<%= `/courses/$course._id` $>">
+                    <a href ="<%= `/courses/${course._id}` %>">
                         <%= course.title %>
                     </a>
                 </td>
@@ -21,12 +22,12 @@
                     <%= course.description %>
                 </td>
                 <td>
-                    <a href =" `<%= courses/${course._id}/edit` %>">
+                    <a href ="<%= `courses/${course._id}/edit` %>">
                         Edit
                     </a>
                 </td>
                 <td>
-                    <a href =" `<%= courses/${course._id}/delete?_method-DELETE` %>" onclick="return confirm('Are you sure?')">
+                    <a href="<%= `courses/${course._id}/delete?_method=DELETE` %>" onclick="return confirm(`Are you sure?`)">
                         Delete
                     </a>
                 </td>

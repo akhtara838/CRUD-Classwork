@@ -1,9 +1,17 @@
 <div class = "form-data">
     <form action ="/courses/create" method ="POST">
-    <label for="txtName">
-        Name
-    </label>
-    <input type="text" name="name" id="txtName" autofocus required>
+    <label for="txtName">Name</label>
+    <input type="text" name="title" id="txtName" autofocus required>
+
+    <label for="txtDescription">Description</label>
+    <input type="text" name="description" id="txtDescription" required>
+
+    <label for="maxStudents">Max Students: </label>
+    <input type="number" name="maxStudents" id="maxStudents" required>
+
+    <label for="cost">Cost: $</label>
+    <input type="number" name="cost" id="cost" required>
+
     <button type="submit">Create</button>
     </form>
 </div>

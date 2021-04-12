@@ -31,7 +31,7 @@ router.use(express.static("public"))
 //app.get("/", homeController.showIndex);
 
 
-router.use(methodOverride("_method", {methods:["POST", "GET"]}))
+router.use(methodOverride("_method", {methods:['POST', 'GET']}))
 
 router.get("/", homeController.index);
 router.get("/subscribers", subscribersController.index, subscribersController.indexView);

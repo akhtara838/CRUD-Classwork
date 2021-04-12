@@ -1,9 +1,10 @@
-const course = require("../models/course");
+"use strict";
+const Course = require("../models/course");
 
 module.exports = {
     index: (req, res, next) => {
         Course.find()
-            .then(course => {
+            .then(courses => {
                 res.locals.courses = courses;
                 next();
             })
@@ -13,10 +14,10 @@ module.exports = {
             })
     },
     indexView: (req, res) => {
-        res.render("/courses/index");
+        res.render("courses/index");
     },
     new: (req, res) => {
-        res.render("/courses/new");
+        res.render("courses/new");
     },
     create: (req, res, next) => {
         let newCourse = new Course({
@@ -25,14 +26,14 @@ module.exports = {
             maxStudents: req.body.maxStudents,
             cost: req.body.cost
         });
-        course.create(newCourse)
+        Course.create(newCourse)
             .then(course => {
                 res.locals.course = course;
                 res.locals.redirect = "/courses";
                 next();
             })
             .catch(error => {
-                console.log(`Error savine user: ${error.message}`);
+                console.log(`Error saving user: ${error.message}`);
                 next(error)
             })
     },
@@ -40,7 +41,6 @@ module.exports = {
         let redirectPath = res.locals.redirect;
         if (redirectPath != undefined) res.redirect(redirectPath);
         else next();
-
     },
     show: (req, res, next) => {
         let courseID = req.params.id;
@@ -51,16 +51,17 @@ module.exports = {
             })
             .catch(error => {
                 console.log(`Error fetching data by ID: ${error.message}`)
+                next(error);
             })
     },
     showView: (req, res) => {
-        res.render(courses / show);
+        res.render("courses/show");
     },
     edit: (req, res, next) => {
         let courseID = req.params.id;
         Course.findById(courseID)
-            .then(Course => {
-                res.render("/courses/edit", { course: course });
+            .then(course => {
+                res.render("courses/edit", { course: course });
             })
             .catch(error => {
                 console.log(`Error loading data by ID: ${error.message}`)
@@ -73,7 +74,8 @@ module.exports = {
             title: req.body.title,
             description: req.body.description,
             maxStudents: req.body.maxStudents,
-            cost: req.body.cost
+            cost: req.body.cost,
+            _id: courseID
         });
         Course.findByIdAndUpdate(courseID, updatedCourse)
             .then(course => {
@@ -95,6 +97,7 @@ module.exports = {
             })
             .catch(error => {
                 console.log(`Error fetching data by ID: ${error.message}`)
+                next(error);
             })
     }
 }

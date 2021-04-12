@@ -1,8 +1,7 @@
 const mongoose = require("mongoose"),
 { Schema } = require("mongoose"),
-Subscriber = require("./subscriber");
-const subscriber = require("./subscriber");
-const { model } = require("./subscriber")
+Subscriber = require("./subscriber"),
+Course = require("./course"),
 userSchema = new Schema(
     {
         name:{
@@ -24,8 +23,8 @@ userSchema = new Schema(
         },
         zipCode: {
             type:Number,
-            min = [10000, "Zip code too short"],
-            max:[99999]
+            min : [10000, "Zip code too short"],
+            max:99999
         },
         password: {
             type:String,
@@ -39,7 +38,7 @@ userSchema = new Schema(
     }
 )
 userSchema.virtual("fullName").get(function (){
-    return `${this.name.first} ${this.name.last}`
+    return `${this.name.first} ${this.name.last}`;
 });
 
 userSchema.pre("save", function(next) {

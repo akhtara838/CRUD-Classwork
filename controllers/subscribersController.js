@@ -1,9 +1,9 @@
-const subscriber = require("../models/subscriber");
+const Subscriber = require("../models/subscriber");
 
 module.exports = {
     index: (req, res, next) => {
         Subscriber.find()
-            .then(subscriber => {
+            .then(subscribers => {
                 res.locals.subscribers = subscribers;
                 next();
             })
@@ -13,10 +13,10 @@ module.exports = {
             })
     },
     indexView: (req, res) => {
-        res.render("/subscribers/index");
+        res.render("subscribers/index");
     },
     new: (req, res) => {
-        res.render("/subscribers/new");
+        res.render("subscribers/new");
     },
     create: (req, res, next) => {
         let newSubscriber = new Subscriber({
@@ -24,7 +24,7 @@ module.exports = {
             email: req.body.email,
             zipCode: req.body.zipCode
         });
-        subscriber.create(newSubscriber)
+        Subscriber.create(newSubscriber)
             .then(subscriber => {
                 res.locals.subscriber = subscriber;
                 res.locals.redirect = "/subscribers";
@@ -50,16 +50,17 @@ module.exports = {
             })
             .catch(error => {
                 console.log(`Error fetching data by ID: ${error.message}`)
+                next(error);
             })
     },
     showView: (req, res) => {
-        res.render(subscribers / show);
+        res.render("subscribers/show");
     },
     edit: (req, res, next) => {
         let subscriberID = req.params.id;
         Subscriber.findById(subscriberID)
-            .then(Subscriber => {
-                res.render("/subscribers/edit", { subscriber: subscriber });
+            .then(subscriber => {
+                res.render("subscribers/edit", { subscriber: subscriber });
             })
             .catch(error => {
                 console.log(`Error loading data by ID: ${error.message}`)
@@ -71,7 +72,8 @@ module.exports = {
         let updatedSubscriber = new Subscriber({
             name: req.body.name,
             email: req.body.email,
-            zipCode: req.body.zipCode
+            zipCode: req.body.zipCode,
+            _id: subscriberID
         });
         Subscriber.findByIdAndUpdate(subscriberID, updatedSubscriber)
             .then(subscriber => {
@@ -93,6 +95,7 @@ module.exports = {
             })
             .catch(error => {
                 console.log(`Error fetching data by ID: ${error.message}`)
+                next(error);
             })
     }
 }

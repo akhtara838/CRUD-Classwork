@@ -1,11 +1,13 @@
-const user = require("../models/user");
+"use strict";
+
+const User = require("../models/user");
 
 module.exports = {
     index: (req, res, next) => {
         User.find()
-            .then(user => {
+            .then(users => {
                 res.locals.users = users;
-                next();
+                next()
             })
             .catch(error => {
                 console.log(`Error fetching user data: ${error.message}`)
@@ -13,29 +15,26 @@ module.exports = {
             })
     },
     indexView: (req, res) => {
-        res.render("/users/index");
+        res.render("users/index");
     },
     new: (req, res) => {
-        res.render("/users/new");
+        res.render("users/new");
     },
     create: (req, res, next) => {
         let newUser = new User({
-            name: {
-                first:req.body.first,
-                last:req.body.last
-            },
-            email:req.body.email,
-            password:req.body.password,
-            zipCode: req.body.zipCode
+            name: {first: req.body.first, last: req.body.last},
+            email: req.body.email,
+            zipCode: req.body.zipCode,
+            password: req.body.password
         });
-        user.create(newUser)
+        User.create(newUser)
             .then(user => {
                 res.locals.user = user;
                 res.locals.redirect = "/users";
                 next();
             })
             .catch(error => {
-                console.log(`Error savine user: ${error.message}`);
+                console.log(`Error saving user: ${error.message}`);
                 next(error)
             })
     },
@@ -43,60 +42,64 @@ module.exports = {
         let redirectPath = res.locals.redirect;
         if (redirectPath != undefined) res.redirect(redirectPath);
         else next();
-
     },
     show: (req, res, next) => {
-        let userID = req.params.id;
-        User.findById(userID)
+        let userId = req.params.id;
+        User.findById(userId)
             .then(user => {
                 res.locals.user = user;
                 next();
             })
             .catch(error => {
-                console.log(`Error fetching data by ID: ${error.message}`)
+                console.log(`Error fetching user by ID: ${error.message}`);
+                next(error)
             })
     },
     showView: (req, res) => {
-        res.render(users / show);
+        res.render("users/show");
     },
     edit: (req, res, next) => {
-        let userID = req.params.id;
-        User.findById(userID)
-            .then(User => {
-                res.render("/users/edit", { user: user });
+        let userId = req.params.id;
+        User.findById(userId)
+            .then(user => {
+                res.render("users/edit", { user: user });
             })
             .catch(error => {
-                console.log(`Error loading data by ID: ${error.message}`)
+                console.log(`Error fetching user by ID: ${error.message}`);
                 next(error);
             })
     },
     update: (req, res, next) => {
-        let userID = req.params.id;
+        let userId = req.params.id;
         let updatedUser = new User({
-            name: req.body.name,
+            name: {first: req.body.first, last: req.body.last},
             email: req.body.email,
-            zipCode: req.body.zipCode
+            zipCode: req.body.zipCode,
+            password: req.body.password,
+            _id: userId
         });
-        User.findByIdAndUpdate(userID, updatedUser)
+
+        User.findByIdAndUpdate(userId, updatedUser)
             .then(user => {
                 res.locals.user = user;
-                res.local.redirect = `/users/${user._id}`;
+                res.locals.redirect = `/users/${user._id}`;
                 next();
             })
             .catch(error => {
-                console.log(`Error fetching data by ID: ${error.message}`)
+                console.log(`Error fetching user by ID: ${error.message}`);
                 next(error);
             })
     },
     delete: (req, res, next) => {
-        let userID = req.params.id;
-        User.findByIdAndRemove(userID)
+        let userId = req.params.id;
+        User.findByIdAndRemove(userId)
             .then(() => {
-                res.locals.redirectView = "/users";
+                res.locals.redirect = "/users";
                 next();
             })
             .catch(error => {
-                console.log(`Error fetching data by ID: ${error.message}`)
+                console.log(`Error fetching user by ID: ${error.message}`);
+                next(error);
             })
     }
 }
